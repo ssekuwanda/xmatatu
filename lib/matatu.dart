@@ -2,7 +2,6 @@ import 'package:card_try/game_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:playing_cards/playing_cards.dart';
-import 'dart:math';
 
 class Matatu extends StatefulWidget {
   Matatu({Key? key}) : super(key: key);
@@ -29,15 +28,18 @@ class _MatatuState extends State<Matatu> {
             children: [
               Container(
                 height: 150,
-                child: FlatCardFan(
-                  children: comp
-                      .map(
-                        (e) => PlayingCardView(
-                          card: e,
-                          shape: shape,
-                        ),
-                      )
-                      .toList(),
+                child: Obx(
+                  () => FlatCardFan(
+                      children: newdeck.deck
+                          .getRange(0, 6)
+                          .toList()
+                          .map(
+                            (e) => PlayingCardView(
+                              card: e,
+                              shape: shape,
+                            ),
+                          )
+                          .toList()),
                 ),
               ),
               Row(
@@ -52,25 +54,18 @@ class _MatatuState extends State<Matatu> {
               ),
               Container(
                 height: 150,
-                child: FlatCardFan(
-                  children: human
-                      .map(
-                        (e) => GestureDetector(
-                          child: PlayingCardView(
-                            showBack: false,
-                            card: e,
-                            shape: shape,
-                          ),
-                          onTap: () {
-                            print(e.suit);
-                            human.remove(PlayingCardView(
+                child: Obx(
+                  () => FlatCardFan(
+                      children: newdeck.deck
+                          .getRange(7, 14)
+                          .toList()
+                          .map(
+                            (e) => PlayingCardView(
                               card: e,
-                            ));
-                            print(human.length);
-                          },
-                        ),
-                      )
-                      .toList(),
+                              shape: shape,
+                            ),
+                          )
+                          .toList()),
                 ),
               ),
             ],

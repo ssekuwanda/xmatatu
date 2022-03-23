@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:get/get.dart';
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:playing_cards/playing_cards.dart';
 
 List shuffle(List items) {
@@ -16,10 +17,12 @@ List shuffle(List items) {
 }
 
 class GameController extends GetxController {
+  // final List newDeck = [].obs;
   List deck = shuffle(standardFiftyTwoCardDeck()).obs;
+  List comp = [].obs;
 
-  humanCards() {
-    return deck.getRange(0, 6).toList();
+  GameController() {
+    comp = deck.getRange(0, 6).toList();
   }
 }
 
