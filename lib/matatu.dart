@@ -20,7 +20,7 @@ class _MatatuState extends State<Matatu> {
           color: Colors.black54,
         ));
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: const Color(0xff012E44),
       body: SafeArea(
         child: Container(
           child: Column(
@@ -30,9 +30,7 @@ class _MatatuState extends State<Matatu> {
                 height: 150,
                 child: Obx(
                   () => FlatCardFan(
-                      children: newdeck.deck
-                          .getRange(0, 6)
-                          .toList()
+                      children: newdeck.comp
                           .map(
                             (e) => PlayingCardView(
                               card: e,
@@ -56,13 +54,16 @@ class _MatatuState extends State<Matatu> {
                 height: 150,
                 child: Obx(
                   () => FlatCardFan(
-                      children: newdeck.deck
-                          .getRange(7, 14)
-                          .toList()
+                      children: newdeck.human
                           .map(
-                            (e) => PlayingCardView(
-                              card: e,
-                              shape: shape,
+                            (e) => GestureDetector(
+                              onTap: () {
+                                newdeck.addToPlayed(e);
+                              },
+                              child: PlayingCardView(
+                                card: e,
+                                shape: shape,
+                              ),
                             ),
                           )
                           .toList()),

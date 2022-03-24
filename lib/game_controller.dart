@@ -17,16 +17,28 @@ List shuffle(List items) {
 }
 
 class GameController extends GetxController {
-  // final List newDeck = [].obs;
-  List deck = shuffle(standardFiftyTwoCardDeck()).obs;
-  List comp = [].obs;
+  late RxList deck;
+  late RxList comp;
+  late RxList human;
+  RxList scene = [].obs;
 
-  GameController() {
-    comp = deck.getRange(0, 6).toList();
+  @override
+  onInit() {
+    super.onInit();
+    deck = shuffle(standardFiftyTwoCardDeck()).obs;
+    comp = deck.sublist(0, 6).obs;
+    human = deck.sublist(7, 13).obs;
+    scene = [].obs;
+  }
+
+  addToPlayed(card) {
+    human.remove(card);
+    scene.add(card);
   }
 }
 
-  // List comp = deck.getRange(0, 6).toList();
+// List deck = shuffle(standardFiftyTwoCardDeck());
+ // List comp = deck.getRange(0, 6).toList();
   // List human = deck.getRange(7, 13).toList();
   // List otherDeck = deck.getRange(14, 51).toList();
   // List played = [];
