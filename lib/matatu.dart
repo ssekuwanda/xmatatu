@@ -21,6 +21,7 @@ class _MatatuState extends State<Matatu> {
         ));
     return Scaffold(
       backgroundColor: const Color(0xff012E44),
+      // const Color(0xff012E44),
       body: SafeArea(
         child: Container(
           child: Column(
@@ -34,6 +35,7 @@ class _MatatuState extends State<Matatu> {
                           .map(
                             (e) => PlayingCardView(
                               card: e,
+                              showBack: true,
                               shape: shape,
                             ),
                           )
@@ -43,10 +45,38 @@ class _MatatuState extends State<Matatu> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Expanded(child: Container()),
                   Container(
-                    child: Obx(() => PlayingCardView(card: newdeck.deck.last)),
+                    height: 160,
+                    child: newdeck.scene.isEmpty
+                        ? Text("Empty")
+                        : Stack(
+                            children: newdeck.scene
+                                .map(
+                                  (e) => PlayingCardView(
+                                    card: e,
+                                    shape: shape,
+                                  ),
+                                )
+                                .toList(),
+                          ),
+                  ),
+                  SizedBox(
                     height: 150,
+                    child: Stack(
+                      children: [
+                        Obx(() => PlayingCardView(card: newdeck.deck.last)),
+                        Transform.rotate(
+                          angle: 70,
+                          child: GestureDetector(
+                            onTap: () => newdeck.loadCard(),
+                            child: PlayingCardView(
+                              card: newdeck.deck.last,
+                              showBack: true,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

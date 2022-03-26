@@ -1,15 +1,31 @@
-import 'package:card_try/menu/menu_bg.dart';
-import 'package:card_try/menu/menu_buttons.dart';
-import 'package:card_try/menu/title.dart';
+import 'package:card_try/widgets/menu_buttons.dart';
+import 'package:card_try/widgets/menu_settings.dart';
+import 'package:card_try/widgets/title.dart';
 import 'package:flutter/material.dart';
 
-class MenuScreen extends StatelessWidget {
+class GameMenu extends StatelessWidget {
+  const GameMenu({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         children: [
-          const MenuBackground(),
+          Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [Color(0xff1E3C72), Color(0xff2A5298)],
+              ),
+            ),
+          ),
+          const Positioned(
+            top: 50,
+            right: 2,
+            left: 295,
+            child: MenuSettings(),
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 32),
             child: Center(
@@ -28,12 +44,6 @@ class MenuScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Positioned(
-          //   top: 55,
-          //   right: 32,
-          //   left: 32,
-          //   child: const MenuSettings(),
-          // ),
         ],
       ),
     );

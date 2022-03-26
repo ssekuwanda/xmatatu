@@ -1,7 +1,5 @@
 import 'dart:math';
-
 import 'package:get/get.dart';
-import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:playing_cards/playing_cards.dart';
 
 List shuffle(List items) {
@@ -20,7 +18,7 @@ class GameController extends GetxController {
   late RxList deck;
   late RxList comp;
   late RxList human;
-  RxList scene = [].obs;
+  late RxList scene;
 
   @override
   onInit() {
@@ -29,16 +27,19 @@ class GameController extends GetxController {
     comp = deck.sublist(0, 6).obs;
     human = deck.sublist(7, 13).obs;
     scene = [].obs;
+    scene.add(comp[1]);
+    comp.remove(comp[1]);
+  }
+
+  loadCard() {
+    human.add(deck[0]);
+    deck.remove(deck[0]);
+    update();
   }
 
   addToPlayed(card) {
     human.remove(card);
     scene.add(card);
+    update();
   }
 }
-
-// List deck = shuffle(standardFiftyTwoCardDeck());
- // List comp = deck.getRange(0, 6).toList();
-  // List human = deck.getRange(7, 13).toList();
-  // List otherDeck = deck.getRange(14, 51).toList();
-  // List played = [];

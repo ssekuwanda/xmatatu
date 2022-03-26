@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class PrimaryButton extends StatelessWidget {
   const PrimaryButton({
@@ -32,7 +31,7 @@ class PrimaryButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
         ),
         child: Container(
-          constraints: const BoxConstraints(minWidth: 88, minHeight: 36),
+          constraints: const BoxConstraints(minWidth: 88, minHeight: 46),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
             child: Row(
@@ -43,18 +42,16 @@ class PrimaryButton extends StatelessWidget {
                   // If there is no icon we don't want any spacing so the text is properly centered
                   width: buttonIcon == null ? 0 : 5,
                 ),
-                Expanded(
+                Center(
                   child: Text(
                     buttonText,
                     overflow: TextOverflow.fade,
                     maxLines: 1,
                     softWrap: false,
-                    style: GoogleFonts.cairo(
-                      textStyle: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
