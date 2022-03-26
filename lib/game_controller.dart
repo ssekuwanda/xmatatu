@@ -19,16 +19,27 @@ class GameController extends GetxController {
   late RxList comp;
   late RxList human;
   late RxList scene;
+  late RxList playedAngle;
 
   @override
   onInit() {
     super.onInit();
     deck = shuffle(standardFiftyTwoCardDeck()).obs;
-    comp = deck.sublist(0, 6).obs;
-    human = deck.sublist(7, 13).obs;
+    comp = deck.sublist(0, 7).obs;
+    human = deck.sublist(8, 15).obs;
     scene = [].obs;
+    playedAngle = [].obs;
+
     scene.add(comp[1]);
     comp.remove(comp[1]);
+  }
+
+  genAngel() {
+    Random random = Random();
+    int randomNumber = random.nextInt(180) + 1;
+    print(randomNumber);
+    playedAngle.add(randomNumber);
+    update();
   }
 
   loadCard() {
@@ -39,7 +50,11 @@ class GameController extends GetxController {
 
   addToPlayed(card) {
     human.remove(card);
+    genAngel();
     scene.add(card);
+
     update();
   }
+
+  gamePlay() {}
 }

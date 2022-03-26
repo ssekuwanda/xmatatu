@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:card_try/game_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -48,16 +50,22 @@ class _MatatuState extends State<Matatu> {
                   Container(
                     height: 160,
                     child: newdeck.scene.isEmpty
-                        ? Text("Empty")
-                        : Stack(
-                            children: newdeck.scene
-                                .map(
-                                  (e) => PlayingCardView(
-                                    card: e,
-                                    shape: shape,
-                                  ),
-                                )
-                                .toList(),
+                        ? const Text("Empty")
+                        : Obx(
+                            () => Stack(
+                              children: newdeck.scene
+                                  .map(
+                                    (e) => Transform.rotate(
+                                      angle:
+                                          Random().nextInt(180) + 1.toDouble(),
+                                      child: PlayingCardView(
+                                        card: e,
+                                        shape: shape,
+                                      ),
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
                           ),
                   ),
                   SizedBox(
