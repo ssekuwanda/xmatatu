@@ -19,7 +19,6 @@ class GameController extends GetxController {
   late RxList comp;
   late RxList human;
   late RxList scene;
-  late RxList playedAngle;
 
   @override
   onInit() {
@@ -28,18 +27,8 @@ class GameController extends GetxController {
     comp = deck.sublist(0, 7).obs;
     human = deck.sublist(8, 15).obs;
     scene = [].obs;
-    playedAngle = [].obs;
-
     scene.add(comp[1]);
     comp.remove(comp[1]);
-  }
-
-  genAngel() {
-    Random random = Random();
-    int randomNumber = random.nextInt(180) + 1;
-    print(randomNumber);
-    playedAngle.add(randomNumber);
-    update();
   }
 
   loadCard() {
@@ -50,7 +39,6 @@ class GameController extends GetxController {
 
   addToPlayed(card) {
     human.remove(card);
-    genAngel();
     scene.add(card);
 
     update();
