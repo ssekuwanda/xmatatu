@@ -25,8 +25,10 @@ class _MatatuState extends State<Matatu> {
       ),
     );
     return Scaffold(
-      backgroundColor: const Color(0xff012E44),
+      backgroundColor: Colors.green[900],
       // const Color(0xff012E44),
+      // Colors.pink[300],
+      // Colors.teal[900],
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,7 +82,7 @@ class _MatatuState extends State<Matatu> {
                         ),
                       ),
                       Transform.rotate(
-                        angle: 70,
+                        angle: 918,
                         child: GestureDetector(
                           onTap: () => newdeck.loadCard(),
                           child: PlayingCardView(
@@ -113,6 +115,9 @@ class _MatatuState extends State<Matatu> {
                         )
                         .toList()),
               ),
+            ),
+            Row(
+              children: [],
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:card_try/matatu.dart';
+import 'package:card_try/screens/tic_tak_toe.dart';
 import 'package:card_try/widgets/button_banner.dart';
 import 'package:card_try/widgets/primary_button.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class MenuButtons extends StatelessWidget {
             buttonText: "OFFLINE MULTIPLAYER",
             buttonIcon: Icons.phone_android_outlined,
             buttonPress: () => Get.to(
-              () => Matatu(),
+              () => TicTac(),
             ),
             buttonGradient: const LinearGradient(
               colors: [Color(0xffE33E49), Color(0xff9B00B5)],
