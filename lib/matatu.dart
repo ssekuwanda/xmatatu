@@ -41,7 +41,7 @@ class _MatatuState extends State<Matatu> {
                         .map(
                           (e) => PlayingCardView(
                             card: e,
-                            showBack: true,
+                            showBack: false,
                             shape: shape,
                           ),
                         )
@@ -75,11 +75,9 @@ class _MatatuState extends State<Matatu> {
                   height: 150,
                   child: Stack(
                     children: [
-                      Obx(
-                        () => PlayingCardView(
-                          card: newdeck.deck.last,
-                          shape: shape,
-                        ),
+                      PlayingCardView(
+                        card: newdeck.chopper,
+                        shape: shape,
                       ),
                       Transform.rotate(
                         angle: 918,

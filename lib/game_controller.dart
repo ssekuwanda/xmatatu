@@ -24,8 +24,13 @@ class GameController extends GetxController {
   // A scene contains what has been played
   late RxList scene;
 
+  late final chopper;
+
   bool _humanTurn = true;
   bool get humanTurn => _humanTurn;
+
+  bool _gameOver = true;
+  bool get gameOver => _gameOver;
 
   // Starting the game
   @override
@@ -33,6 +38,12 @@ class GameController extends GetxController {
     super.onInit();
     // On start shuffle the game cards
     deck = shuffle(standardFiftyTwoCardDeck()).obs;
+
+    if (deck.last.value == CardValue.seven) {
+      deck = shuffle(standardFiftyTwoCardDeck()).obs;
+    }
+
+    chopper = deck.last;
     // Serve 7 cards to the players
     comp = deck.sublist(0, 7).obs;
     human = deck.sublist(8, 15).obs;
@@ -52,10 +63,20 @@ class GameController extends GetxController {
 
   addToPlayed(card) {
     human.remove(card);
+    print(card.suit);
+    print(card.value);
+
     scene.add(card);
 
+    gamePlay();
     update();
   }
 
-  gamePlay() {}
+  gamePlay() async {
+    await Future.delayed(Duration(milliseconds: 1500), () {
+      comp.remove(comp[1]);
+      scene.add(comp[1]);
+      update();
+    });
+  }
 }
