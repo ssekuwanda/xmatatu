@@ -1,10 +1,8 @@
 import 'dart:math';
-
 import 'package:card_try/game_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:playing_cards/playing_cards.dart';
-
 import 'widgets/card_fan.dart';
 
 class Matatu extends StatefulWidget {
@@ -21,14 +19,13 @@ class _MatatuState extends State<Matatu> {
     ShapeBorder shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
       side: const BorderSide(
-        color: Colors.black38,
+        // color: Colors.black38,
+        width: 0.5,
       ),
     );
+
     return Scaffold(
       backgroundColor: Colors.green[900],
-      // const Color(0xff012E44),
-      // Colors.pink[300],
-      // Colors.teal[900],
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -36,16 +33,17 @@ class _MatatuState extends State<Matatu> {
             SizedBox(
               height: 150,
               child: Obx(
-                () => FlatCardFan(
-                    children: newdeck.comp
-                        .map(
-                          (e) => PlayingCardView(
-                            card: e,
-                            showBack: false,
-                            shape: shape,
-                          ),
-                        )
-                        .toList()),
+                () => CardFan(
+                  children: newdeck.comp
+                      .map(
+                        (e) => PlayingCardView(
+                          card: e,
+                          showBack: false,
+                          shape: shape,
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
             ),
             Row(
@@ -99,23 +97,24 @@ class _MatatuState extends State<Matatu> {
               height: 150,
               child: Obx(
                 () => CardFan(
-                    children: newdeck.human
-                        .map(
-                          (e) => GestureDetector(
-                            onTap: () {
-                              newdeck.addToPlayed(e);
-                            },
-                            child: PlayingCardView(
-                              card: e,
-                              shape: shape,
-                            ),
+                  children: newdeck.human
+                      .map(
+                        (card) => GestureDetector(
+                          onTap: () {
+                            if (card.value == CardValue.ace) {
+                              newdeck.showCardSuitPicker();
+                            }
+                            newdeck.gameLogic(card);
+                          },
+                          child: PlayingCardView(
+                            card: card,
+                            shape: shape,
                           ),
-                        )
-                        .toList()),
+                        ),
+                      )
+                      .toList(),
+                ),
               ),
-            ),
-            Row(
-              children: [],
             ),
           ],
         ),

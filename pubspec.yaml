@@ -13,9 +13,9 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.2
-  playing_cards: ^0.2.0+7
+  # playing_cards: ^0.2.0+7
+  playing_cards: ^0.3.1+9
   get:
-  sidekick:
 
 dev_dependencies:
   flutter_test:
