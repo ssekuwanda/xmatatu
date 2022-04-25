@@ -30,10 +30,10 @@ class GameController extends GetxController {
   bool _humanTurn = true;
   bool get humanTurn => _humanTurn;
 
-  bool _gameOver = false;
+  final bool _gameOver = false;
   bool get gameOver => _gameOver;
 
-  bool _validMove = false;
+  final bool _validMove = false;
 
   // Starting the game
   @override
@@ -55,49 +55,82 @@ class GameController extends GetxController {
 
   showCardSuitPicker() {
     Get.defaultDialog(
-      title: " Pick a Suit",
-      // backgroundColor: Colors.teal,
+      title: "Pick a Suit",
       barrierDismissible: true,
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // ♥️❤️
           Text("♦",
-              style: TextStyle(fontSize: 47, color: Colors.redAccent[700])),
-          Text("♣", style: TextStyle(fontSize: 47, color: Colors.black)),
+              style: TextStyle(
+                  fontSize: 47,
+                  fontFamily: 'KleeOne',
+                  color: Colors.redAccent[700])),
+          const Text("♣",
+              style: TextStyle(
+                fontSize: 47,
+                fontFamily: 'KleeOne',
+                color: Colors.black,
+              )),
           Text("♥️",
-              style: TextStyle(fontSize: 47, color: Colors.redAccent[700])),
-          Text("♠", style: TextStyle(fontSize: 47, color: Colors.black)),
+              style: TextStyle(
+                  fontSize: 47,
+                  fontFamily: 'KleeOne',
+                  color: Colors.redAccent[700])),
+          const Text("♠",
+              style: TextStyle(
+                fontSize: 47,
+                fontFamily: 'KleeOne',
+                color: Colors.black,
+              )),
         ],
       ),
     );
-  }
-
-  gameLogic(card) {
-    PlayingCard lastPlayed = scene.last;
-    // if (card.value == CardValue.ace) {
-    //   showCardSuitPicker();
-    // }
-    if (card.value == lastPlayed.value || card.suit == lastPlayed.suit) {
-      print("Valid Move");
-      print(card.value);
-      addToPlayed(card);
-      gamePlay();
-    } else {
-      print("Invalid Move");
-    }
   }
 
   // Out of cards? draw a card
   loadCard() {
     human.add(deck[0]);
     deck.remove(deck[0]);
-    update();
+    PlayingCard lastPlayed = scene.last;
+    List<PlayingCard> possibles = [];
+    for (var i = 0; i < human.length; i++) {
+      if (human[i].suit == lastPlayed.suit ||
+          human[i].value == lastPlayed.value) {
+        possibles.add(human[i]);
+      }
+    }
+    if (possibles.isEmpty) {
+      gamePlay();
+      _humanTurn = false;
+      update();
+    }
   }
 
   loadCard2() {
     comp.add(deck[0]);
+    deck.remove(comp.last);
+    if (_humanTurn = false) {
+      gamePlay();
+    }
+    _humanTurn = true;
+    update();
+  }
+
+  playAfterLoadAI() {
+    comp.add(deck[0]);
     deck.remove(deck[0]);
+    PlayingCard lastPlayed = scene.last;
+    List<PlayingCard> possibles = [];
+    for (var i = 0; i < comp.length; i++) {
+      if (comp[i].suit == lastPlayed.suit ||
+          comp[i].value == lastPlayed.value) {
+        possibles.add(comp[i]);
+      }
+    }
+    if (possibles.isNotEmpty) {
+      gamePlay();
+      // _humanTurn = true;
+    }
     update();
   }
 
@@ -113,6 +146,17 @@ class GameController extends GetxController {
     update();
   }
 
+  gameLogic(card) {
+    PlayingCard lastPlayed = scene.last;
+    if (card.value == lastPlayed.value || card.suit == lastPlayed.suit) {
+      addToPlayed(card);
+      _humanTurn = false;
+      gamePlay();
+    } else {
+      print("Invalid Move");
+    }
+  }
+
   // Game AI
   gamePlay() async {
     await Future.delayed(const Duration(milliseconds: 1500), () {
@@ -124,12 +168,12 @@ class GameController extends GetxController {
           possibles.add(comp[i]);
         }
       }
-      if (possibles.isNotEmpty) {
+      if (_humanTurn == false && possibles.isNotEmpty) {
         addToPlayedAI(possibles[0]);
+        _humanTurn = true;
         update();
       } else {
-        loadCard2();
-        update();
+        playAfterLoadAI();
       }
     });
   }
