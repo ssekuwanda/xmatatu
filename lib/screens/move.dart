@@ -42,7 +42,7 @@ class _MoveState extends State<Move> {
                 // height: play ? 100 : 10,
                 bottom: play ? MediaQuery.of(context).size.height / 2 : 0,
                 left: play ? MediaQuery.of(context).size.width / 2 : 0,
-                curve: Curves.easeInOut,
+                curve: Curves.fastOutSlowIn,
                 duration: Duration(milliseconds: 1200),
                 child: GestureDetector(
                   onTap: () {
