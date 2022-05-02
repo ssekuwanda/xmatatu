@@ -14,18 +14,28 @@ class Matatu extends StatefulWidget {
 
 class _MatatuState extends State<Matatu> {
   final GameController newdeck = Get.put(GameController());
+  double posX = -1;
+  double posY = -1;
+  void _moveCard() {
+    setState(() {
+      posX = 1;
+      posY = 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ShapeBorder shape = RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
       side: const BorderSide(
-        // color: Colors.black38,
+        color: Colors.black45,
         width: 0.5,
       ),
     );
 
     return Scaffold(
-      backgroundColor: Colors.green[900],
+      // backgroundColor: Colors.green[900],
+      backgroundColor: Colors.green,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -37,8 +47,9 @@ class _MatatuState extends State<Matatu> {
                   children: newdeck.comp
                       .map(
                         (e) => PlayingCardView(
+                          elevation: 30,
                           card: e,
-                          showBack: false,
+                          showBack: true,
                           shape: shape,
                         ),
                       )
@@ -60,6 +71,7 @@ class _MatatuState extends State<Matatu> {
                                   (e) => Transform.rotate(
                                     angle: Random().nextInt(180) + 1.toDouble(),
                                     child: PlayingCardView(
+                                      elevation: 19,
                                       card: e,
                                       shape: shape,
                                     ),
@@ -72,17 +84,29 @@ class _MatatuState extends State<Matatu> {
                 SizedBox(
                   height: 150,
                   child: Stack(
+                    clipBehavior: Clip.none,
                     children: [
-                      PlayingCardView(
-                        card: newdeck.chopper,
-                        shape: shape,
+                      Positioned(
+                        child: Transform.rotate(
+                          angle: 90 * pi / 180,
+                          child: PlayingCardView(
+                            card: newdeck.chopper,
+                            elevation: 30,
+                            shape: shape,
+                          ),
+                        ),
                       ),
-                      Transform.rotate(
-                        angle: 918,
+                      Positioned(
+                        width: 100,
+                        left: 28,
                         child: GestureDetector(
-                          onTap: () => newdeck.loadCard(),
+                          onTap: () {
+                            _moveCard;
+                            newdeck.loadCard();
+                          },
                           child: PlayingCardView(
                             card: newdeck.deck.last,
+                            elevation: 30,
                             shape: shape,
                             showBack: true,
                           ),
@@ -107,6 +131,7 @@ class _MatatuState extends State<Matatu> {
                             newdeck.gameLogic(card);
                           },
                           child: PlayingCardView(
+                            elevation: 30.9,
                             card: card,
                             shape: shape,
                           ),

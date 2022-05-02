@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:card_try/widgets/individual_suit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:playing_cards/playing_cards.dart';
@@ -60,28 +61,22 @@ class GameController extends GetxController {
       content: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("♦",
-              style: TextStyle(
-                  fontSize: 47,
-                  fontFamily: 'KleeOne',
-                  color: Colors.redAccent[700])),
-          const Text("♣",
-              style: TextStyle(
-                fontSize: 47,
-                fontFamily: 'KleeOne',
-                color: Colors.black,
-              )),
-          Text("♥️",
-              style: TextStyle(
-                  fontSize: 47,
-                  fontFamily: 'KleeOne',
-                  color: Colors.redAccent[700])),
-          const Text("♠",
-              style: TextStyle(
-                fontSize: 47,
-                fontFamily: 'KleeOne',
-                color: Colors.black,
-              )),
+          IndSuit(
+            symbol: "♦",
+            color: Colors.redAccent.shade700,
+          ),
+          const IndSuit(
+            symbol: "♣",
+            color: Colors.black,
+          ),
+          IndSuit(
+            symbol: "♥️",
+            color: Colors.redAccent.shade700,
+          ),
+          const IndSuit(
+            symbol: "♠",
+            color: Colors.black,
+          ),
         ],
       ),
     );
@@ -104,6 +99,16 @@ class GameController extends GetxController {
       _humanTurn = false;
       update();
     }
+  }
+
+  loadAfterTwo() {
+    human.add(deck[0]);
+    deck.remove(deck[0]);
+
+    human.add(deck[1]);
+    deck.remove(deck[1]);
+    gamePlay();
+    update();
   }
 
   loadCard2() {
@@ -168,8 +173,22 @@ class GameController extends GetxController {
           possibles.add(comp[i]);
         }
       }
-      if (_humanTurn == false && possibles.isNotEmpty) {
-        addToPlayedAI(possibles[0]);
+      if (possibles.isNotEmpty) {
+        if (possibles[0].value == CardValue.two) {
+          addToPlayedAI(possibles[0]);
+          List<PlayingCard> twosList = [];
+          for (var i = 0; i < human.length; i++) {
+            if (human[i].value == CardValue.two) {
+              twosList.add(comp[i]);
+            }
+          }
+          if (twosList.isEmpty) {
+            loadAfterTwo();
+          } else {}
+        } else {
+          addToPlayedAI(possibles[0]);
+        }
+
         _humanTurn = true;
         update();
       } else {
