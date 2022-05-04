@@ -14,14 +14,6 @@ class Matatu extends StatefulWidget {
 
 class _MatatuState extends State<Matatu> {
   final GameController newdeck = Get.put(GameController());
-  double posX = -1;
-  double posY = -1;
-  void _moveCard() {
-    setState(() {
-      posX = 1;
-      posY = 1;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +93,6 @@ class _MatatuState extends State<Matatu> {
                         left: 28,
                         child: GestureDetector(
                           onTap: () {
-                            _moveCard;
                             newdeck.loadCard();
                           },
                           child: PlayingCardView(
@@ -125,12 +116,14 @@ class _MatatuState extends State<Matatu> {
                       .map(
                         (card) => GestureDetector(
                           onTap: () {
+                            setState(() {});
                             if (card.value == CardValue.ace) {
                               newdeck.showCardSuitPicker();
                             }
                             newdeck.gameLogic(card);
                           },
                           child: PlayingCardView(
+                            key: UniqueKey(),
                             elevation: 30.9,
                             card: card,
                             shape: shape,
