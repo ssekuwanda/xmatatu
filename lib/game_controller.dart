@@ -8,6 +8,7 @@ List shuffle(List items) {
   var random = Random();
   for (var i = items.length - 1; i > 0; i--) {
     var n = random.nextInt(i + 1);
+
     var temp = items[i];
     items[i] = items[n];
     items[n] = temp;
@@ -48,7 +49,11 @@ class GameController extends GetxController {
 
     chopper = deck.last;
     comp = deck.sublist(0, 7).obs;
+    deck.removeRange(0, 7);
+
     human = deck.sublist(8, 15).obs;
+    deck.removeRange(8, 15);
+
     scene = [].obs;
     scene.add(comp[1]);
     comp.remove(comp[1]);
@@ -84,8 +89,13 @@ class GameController extends GetxController {
 
   // Out of cards? draw a card
   loadCard() {
-    human.add(deck[0]);
-    deck.remove(deck[0]);
+    PlayingCard _card = deck[0];
+
+    human.add(_card);
+    deck.remove(_card);
+    print(deck.length);
+    print(human.length);
+    print(comp.length);
     PlayingCard lastPlayed = scene.last;
     List<PlayingCard> possibles = [];
     for (var i = 0; i < human.length; i++) {
@@ -102,18 +112,22 @@ class GameController extends GetxController {
   }
 
   loadAfterTwo() {
-    human.add(deck[0]);
-    deck.remove(deck[0]);
+    PlayingCard _card1 = deck[0];
+    human.add(_card1);
+    deck.remove(_card1);
 
-    human.add(deck[1]);
-    deck.remove(deck[1]);
+    PlayingCard _card2 = deck[1];
+    human.add(_card2);
+    deck.remove(_card2);
     gamePlay();
     update();
   }
 
   loadCard2() {
-    comp.add(deck[0]);
-    deck.remove(comp.last);
+    PlayingCard _card = deck[0];
+
+    comp.add(_card);
+    deck.remove(_card);
     if (_humanTurn = false) {
       gamePlay();
     }
@@ -122,8 +136,9 @@ class GameController extends GetxController {
   }
 
   playAfterLoadAI() {
-    comp.add(deck[0]);
-    deck.remove(deck[0]);
+    PlayingCard _card = deck[0];
+    comp.add(_card);
+    deck.remove(_card);
     PlayingCard lastPlayed = scene.last;
     List<PlayingCard> possibles = [];
     for (var i = 0; i < comp.length; i++) {
@@ -164,7 +179,7 @@ class GameController extends GetxController {
 
   // Game AI
   gamePlay() async {
-    await Future.delayed(const Duration(milliseconds: 1500), () {
+    await Future.delayed(const Duration(milliseconds: 1200), () {
       PlayingCard lastPlayed = scene.last;
       List<PlayingCard> possibles = [];
       for (var i = 0; i < comp.length; i++) {

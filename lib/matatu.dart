@@ -50,28 +50,39 @@ class _MatatuState extends State<Matatu> {
               ),
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   height: 160,
+                  padding: EdgeInsets.only(left: 25),
                   child: newdeck.scene.isEmpty
                       ? const Text("Empty")
                       : Obx(
                           () => Stack(
                             children: newdeck.scene
                                 .map(
-                                  (e) => Transform.rotate(
-                                    angle: Random().nextInt(180) + 1.toDouble(),
-                                    child: PlayingCardView(
-                                      elevation: 19,
-                                      card: e,
-                                      shape: shape,
+                                  (e) => Transform.translate(
+                                    key: UniqueKey(),
+                                    transformHitTests: false,
+                                    offset: Offset(Random().nextInt(70) + 1,
+                                        Random().nextInt(50) + 1),
+                                    child: Transform.rotate(
+                                      angle:
+                                          Random().nextInt(180) + 1.toDouble(),
+                                      child: PlayingCardView(
+                                        elevation: 19,
+                                        card: e,
+                                        shape: shape,
+                                      ),
                                     ),
                                   ),
                                 )
                                 .toList(),
                           ),
                         ),
+                ),
+                SizedBox(
+                  width: 143,
                 ),
                 SizedBox(
                   height: 150,
@@ -81,25 +92,30 @@ class _MatatuState extends State<Matatu> {
                       Positioned(
                         child: Transform.rotate(
                           angle: 90 * pi / 180,
-                          child: PlayingCardView(
-                            card: newdeck.chopper,
-                            elevation: 30,
-                            shape: shape,
+                          child: Container(
+                            height: 150,
+                            child: PlayingCardView(
+                              card: newdeck.chopper,
+                              elevation: 30,
+                              shape: shape,
+                            ),
                           ),
                         ),
                       ),
                       Positioned(
-                        width: 100,
-                        left: 28,
+                        left: 20,
                         child: GestureDetector(
                           onTap: () {
                             newdeck.loadCard();
                           },
-                          child: PlayingCardView(
-                            card: newdeck.deck.last,
-                            elevation: 30,
-                            shape: shape,
-                            showBack: true,
+                          child: Container(
+                            height: 150,
+                            child: PlayingCardView(
+                              card: newdeck.deck.last,
+                              elevation: 30,
+                              shape: shape,
+                              showBack: true,
+                            ),
                           ),
                         ),
                       ),

@@ -48,7 +48,7 @@ class MenuButtons extends StatelessWidget {
               PrimaryButton(
                 buttonText: "ONLINE MULTIPLAYER",
                 buttonIcon: Icons.people,
-                buttonPress: () => Get.to(() => Move()),
+                // buttonPress: () => Get.to(() => Move()),
                 buttonGradient: const LinearGradient(
                   colors: [Color(0xff9534E1), Color(0xff009E95)],
                 ),
