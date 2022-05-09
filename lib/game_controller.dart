@@ -37,6 +37,9 @@ class GameController extends GetxController {
 
   final bool _validMove = false;
 
+  var _playNext;
+  get playNext => _playNext;
+
   // Starting the game
   @override
   onInit() {
@@ -123,15 +126,14 @@ class GameController extends GetxController {
     update();
   }
 
-  loadCard2() {
-    PlayingCard _card = deck[0];
+  loadAICards(int numOfCards) {
+    PlayingCard _card1 = deck[0];
+    PlayingCard _card2 = deck[1];
 
-    comp.add(_card);
-    deck.remove(_card);
-    if (_humanTurn = false) {
-      gamePlay();
-    }
-    _humanTurn = true;
+    comp.add(_card1);
+    deck.remove(_card1);
+    comp.add(_card2);
+    deck.remove(_card2);
     update();
   }
 
@@ -140,16 +142,9 @@ class GameController extends GetxController {
     comp.add(_card);
     deck.remove(_card);
     PlayingCard lastPlayed = scene.last;
-    List<PlayingCard> possibles = [];
-    for (var i = 0; i < comp.length; i++) {
-      if (comp[i].suit == lastPlayed.suit ||
-          comp[i].value == lastPlayed.value) {
-        possibles.add(comp[i]);
-      }
-    }
-    if (possibles.isNotEmpty) {
+    if (_card.value == lastPlayed.value || _card.suit == lastPlayed.suit) {
       gamePlay();
-      // _humanTurn = true;
+      update();
     }
     update();
   }
@@ -177,38 +172,101 @@ class GameController extends GetxController {
     }
   }
 
+  countSuits(List elements) {
+    var map = Map();
+    elements.forEach((element) {
+      if (!map.containsKey(element)) {
+        map[element] = 1;
+      } else {
+        map[element] += 1;
+      }
+    });
+    var thevalue = 0;
+    var highSuit;
+
+    map.forEach((k, v) {
+      if (v > thevalue) {
+        thevalue = v;
+        highSuit = k;
+      }
+    });
+
+    if (highSuit == Suit.clubs) {
+      _playNext = "♣";
+      update();
+    }
+    if (highSuit == Suit.diamonds) {
+      _playNext = "♦";
+      update();
+    }
+    if (highSuit == Suit.clubs) {
+      _playNext = "♣";
+      update();
+    }
+    if (highSuit == Suit.hearts) {
+      _playNext = "♥️";
+      update();
+    }
+    if (highSuit == Suit.clubs) {
+      _playNext = "♠";
+      update();
+    }
+  }
+
   // Game AI
   gamePlay() async {
     await Future.delayed(const Duration(milliseconds: 1200), () {
       PlayingCard lastPlayed = scene.last;
       List<PlayingCard> possibles = [];
+      List<PlayingCard> twosList = [];
+      List<PlayingCard> acesList = [];
+
       for (var i = 0; i < comp.length; i++) {
         if (comp[i].suit == lastPlayed.suit ||
             comp[i].value == lastPlayed.value) {
           possibles.add(comp[i]);
         }
       }
-      if (possibles.isNotEmpty) {
-        if (possibles[0].value == CardValue.two) {
-          addToPlayedAI(possibles[0]);
-          List<PlayingCard> twosList = [];
-          for (var i = 0; i < human.length; i++) {
-            if (human[i].value == CardValue.two) {
-              twosList.add(comp[i]);
+      if (lastPlayed.value == CardValue.two && possibles.isNotEmpty) {
+        if (possibles.contains(CardValue.two)) {
+          for (var i = 0; i < possibles.length; i++) {
+            if (possibles[i].value == CardValue.two) {
+              twosList.add(possibles[i]);
+              addToPlayedAI(twosList[0]);
             }
           }
-          if (twosList.isEmpty) {
-            loadAfterTwo();
-          } else {}
         } else {
-          addToPlayedAI(possibles[0]);
+          loadAICards(2);
         }
-
-        _humanTurn = true;
-        update();
+      } else if (possibles.isNotEmpty) {
+        addToPlayedAI(possibles[0]);
+      } else if (comp.contains(CardValue.ace)) {
+        for (var i = 0; i < possibles.length; i++) {
+          if (possibles[i].value == CardValue.ace) {
+            acesList.add(possibles[i]);
+            PlayingCard playThisSuit = countSuits(comp);
+            addToPlayedAI(acesList[0]);
+          }
+        }
       } else {
-        playAfterLoadAI();
+        loadAICards(1);
       }
     });
   }
 }
+
+
+  // if (possibles[0].value == CardValue.two) {
+          
+  //         List<PlayingCard> twosList = [];
+  //         for (var i = 0; i < human.length; i++) {
+  //           if (human[i].value == CardValue.two) {
+  //             twosList.add(comp[i]);
+  //           }
+  //         }
+  //         if (twosList.isEmpty) {
+  //           loadAfterTwo();
+  //         } else {}
+  //       } else {
+  //         addToPlayedAI(possibles[0]);
+  //       }

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:playing_cards/playing_cards.dart';
 import 'widgets/card_fan.dart';
+import 'widgets/individual_suit.dart';
+import 'package:glass/glass.dart';
 
 class Matatu extends StatefulWidget {
   Matatu({Key? key}) : super(key: key);
@@ -27,7 +29,19 @@ class _MatatuState extends State<Matatu> {
 
     return Scaffold(
       // backgroundColor: Colors.green[900],
-      backgroundColor: Colors.green,
+      // backgroundColor: Colors.deepPurple,
+      // backgroundColor: Colors.amberAccent,
+      // backgroundColor: Colors.blueAccent,
+      // backgroundColor: Colors.blueGrey,
+      backgroundColor: Colors.deepPurpleAccent,
+      // backgroundColor: Colors.indigoAccent,
+      // backgroundColor: Colors.orangeAccent,
+      // backgroundColor: Colors.pinkAccent,
+      // backgroundColor: Colors.black26,
+      // backgroundColor: Colors.redAccent,
+      // backgroundColor: Colors.brown,
+      // backgroundColor: Colors.white70,
+
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -41,7 +55,7 @@ class _MatatuState extends State<Matatu> {
                         (e) => PlayingCardView(
                           elevation: 30,
                           card: e,
-                          showBack: true,
+                          showBack: false,
                           shape: shape,
                         ),
                       )
@@ -50,11 +64,10 @@ class _MatatuState extends State<Matatu> {
               ),
             ),
             Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                  height: 160,
-                  padding: EdgeInsets.only(left: 25),
+                  height: 150,
+                  padding: const EdgeInsets.only(left: 25),
                   child: newdeck.scene.isEmpty
                       ? const Text("Empty")
                       : Obx(
@@ -65,7 +78,7 @@ class _MatatuState extends State<Matatu> {
                                     key: UniqueKey(),
                                     transformHitTests: false,
                                     offset: Offset(Random().nextInt(70) + 1,
-                                        Random().nextInt(50) + 1),
+                                        Random().nextInt(100) + 1),
                                     child: Transform.rotate(
                                       angle:
                                           Random().nextInt(180) + 1.toDouble(),
@@ -81,7 +94,7 @@ class _MatatuState extends State<Matatu> {
                           ),
                         ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 143,
                 ),
                 SizedBox(
@@ -149,6 +162,13 @@ class _MatatuState extends State<Matatu> {
                       .toList(),
                 ),
               ),
+            ),
+            Container(
+              height: 2,
+              // child: IconButton(
+              //   onPressed: () {},
+              //   icon: Icon(Icons.ac_unit),
+              // ),
             ),
           ],
         ),

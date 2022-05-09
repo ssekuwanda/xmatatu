@@ -39,3 +39,62 @@
     //     style: const TextStyle(color: Colors.brown, fontSize: 300),
     //   ),
     // });
+
+
+
+    //     PlayingCardViewStyle myCardStyles = PlayingCardViewStyle(suitStyles: {
+    //   Suit.spades: SuitStyle(
+    //     builder: (context) => const FittedBox(
+    //       fit: BoxFit.fitHeight,
+    //       child: Text(
+    //         "💩",
+    //         style: TextStyle(fontSize: 500),
+    //       ),
+    //     ),
+    //     style: const TextStyle(
+    //       color: Colors.brown,
+    //     ),
+    //     // cardContentBuilders: {
+    //     //   CardValue.jack: (context) => Image.asset("assets/jack_of_spades.png"),
+    //     //   CardValue.queen: (context) =>
+    //     //       Image.asset("assets/queen_of_spades.png"),
+    //     //   CardValue.king: (context) => Image.asset("assets/king_of_spades.png"),
+    //     // },
+    //   ),
+    //   Suit.clubs: SuitStyle(
+    //     builder: (context) => const FittedBox(
+    //       fit: BoxFit.fitHeight,
+    //       child: Text(
+    //         "😃",
+    //         style: TextStyle(fontSize: 500),
+    //       ),
+    //     ),
+    //     style: const TextStyle(
+    //       color: Colors.brown,
+    //     ),
+    //   ),
+    //   Suit.diamonds: SuitStyle(
+    //     builder: (context) => const FittedBox(
+    //       fit: BoxFit.fitHeight,
+    //       child: Text(
+    //         "⚽",
+    //         style: TextStyle(fontSize: 500),
+    //       ),
+    //     ),
+    //     style: const TextStyle(
+    //       color: Colors.brown,
+    //     ),
+    //   ),
+    //   Suit.hearts: SuitStyle(
+    //     builder: (context) => const FittedBox(
+    //       fit: BoxFit.fitHeight,
+    //       child: Text(
+    //         "🔥",
+    //         style: TextStyle(fontSize: 500),
+    //       ),
+    //     ),
+    //     style: const TextStyle(
+    //       color: Colors.brown,
+    //     ),
+    //   ),
+    // });
