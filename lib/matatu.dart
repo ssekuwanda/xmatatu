@@ -28,12 +28,12 @@ class _MatatuState extends State<Matatu> {
     );
 
     return Scaffold(
-      // backgroundColor: Colors.green[900],
+      backgroundColor: Colors.green[900],
       // backgroundColor: Colors.deepPurple,
       // backgroundColor: Colors.amberAccent,
       // backgroundColor: Colors.blueAccent,
       // backgroundColor: Colors.blueGrey,
-      backgroundColor: Colors.deepPurpleAccent,
+      // backgroundColor: Colors.deepPurpleAccent,
       // backgroundColor: Colors.indigoAccent,
       // backgroundColor: Colors.orangeAccent,
       // backgroundColor: Colors.pinkAccent,
@@ -46,6 +46,7 @@ class _MatatuState extends State<Matatu> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // Computer Cards
             SizedBox(
               height: 150,
               child: Obx(
@@ -63,6 +64,7 @@ class _MatatuState extends State<Matatu> {
                 ),
               ),
             ),
+            // Played Cards
             Row(
               children: [
                 Container(
@@ -137,38 +139,74 @@ class _MatatuState extends State<Matatu> {
                 ),
               ],
             ),
-            Container(
-              height: 150,
-              child: Obx(
-                () => CardFan(
-                  children: newdeck.human
-                      .map(
-                        (card) => GestureDetector(
-                          onTap: () {
-                            setState(() {});
-                            if (card.value == CardValue.ace) {
-                              newdeck.showCardSuitPicker();
-                            }
-                            newdeck.gameLogic(card);
-                          },
-                          child: PlayingCardView(
-                            key: UniqueKey(),
-                            elevation: 30.9,
-                            card: card,
-                            shape: shape,
-                          ),
+            Row(
+              children: [
+                Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.only(bottom: 0),
+                      width: 60,
+                      height: 60,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_drop_up_sharp,
+                          size: 60,
+                          color: newdeck.humanTurn ? Colors.grey : Colors.red,
                         ),
-                      )
-                      .toList(),
+                        onPressed: () {
+                          newdeck.toggleTurns();
+                        },
+                      ),
+                    ),
+                    Container(
+                      width: 60,
+                      height: 60,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_drop_down_sharp,
+                          size: 60,
+                          color: newdeck.humanTurn ? Colors.red : Colors.grey,
+                        ),
+                        onPressed: () {
+                          newdeck.toggleTurns();
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-              ),
+              ],
             ),
-            Container(
-              height: 2,
-              // child: IconButton(
-              //   onPressed: () {},
-              //   icon: Icon(Icons.ac_unit),
-              // ),
+
+            Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(top: 10),
+                  height: 150,
+                  child: Obx(
+                    () => CardFan(
+                      children: newdeck.human
+                          .map(
+                            (card) => GestureDetector(
+                              onTap: () {
+                                setState(() {});
+                                if (card.value == CardValue.ace) {
+                                  newdeck.showCardSuitPicker();
+                                }
+                                newdeck.gameLogic(card);
+                              },
+                              child: PlayingCardView(
+                                key: UniqueKey(),
+                                elevation: 30.9,
+                                card: card,
+                                shape: shape,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

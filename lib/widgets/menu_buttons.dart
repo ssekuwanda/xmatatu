@@ -1,5 +1,6 @@
 import 'package:card_try/matatu.dart';
 import 'package:card_try/screens/move.dart';
+import 'package:card_try/screens/settings.dart';
 import 'package:card_try/screens/tic_tak_toe.dart';
 import 'package:card_try/widgets/button_banner.dart';
 import 'package:card_try/widgets/primary_button.dart';
@@ -48,12 +49,14 @@ class MenuButtons extends StatelessWidget {
               PrimaryButton(
                 buttonText: "ONLINE MULTIPLAYER",
                 buttonIcon: Icons.people,
-                // buttonPress: () => Get.to(() => Move()),
+                buttonPress: () => Get.to(
+                  () => const Settings(),
+                ),
                 buttonGradient: const LinearGradient(
                   colors: [Color(0xff9534E1), Color(0xff009E95)],
                 ),
               ),
-              ButtonBanner("Coming Soon"),
+              const ButtonBanner("Coming Soon"),
             ],
           ),
         ),

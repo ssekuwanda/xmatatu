@@ -32,6 +32,9 @@ class GameController extends GetxController {
   bool _humanTurn = true;
   bool get humanTurn => _humanTurn;
 
+  bool _playedTwo = true;
+  bool get playedTwo => _playedTwo;
+
   final bool _gameOver = false;
   bool get gameOver => _gameOver;
 
@@ -60,6 +63,12 @@ class GameController extends GetxController {
     scene = [].obs;
     scene.add(comp[1]);
     comp.remove(comp[1]);
+  }
+
+  toggleTurns() {
+    _humanTurn ? false : true;
+    print(_humanTurn);
+    update();
   }
 
   showCardSuitPicker() {
@@ -96,9 +105,7 @@ class GameController extends GetxController {
 
     human.add(_card);
     deck.remove(_card);
-    print(deck.length);
-    print(human.length);
-    print(comp.length);
+
     PlayingCard lastPlayed = scene.last;
     List<PlayingCard> possibles = [];
     for (var i = 0; i < human.length; i++) {
