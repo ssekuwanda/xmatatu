@@ -66,7 +66,11 @@ class GameController extends GetxController {
   }
 
   toggleTurns() {
-    _humanTurn ? false : true;
+    if (_humanTurn == false) {
+      _humanTurn = true;
+    } else {
+      _humanTurn = false;
+    }
     print(_humanTurn);
     update();
   }
@@ -228,6 +232,7 @@ class GameController extends GetxController {
       List<PlayingCard> twosList = [];
       List<PlayingCard> acesList = [];
 
+      // Possible cards to play
       for (var i = 0; i < comp.length; i++) {
         if (comp[i].suit == lastPlayed.suit ||
             comp[i].value == lastPlayed.value) {
